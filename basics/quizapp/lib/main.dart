@@ -17,19 +17,23 @@ class Myapp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return MyappState();
+    return _MyappState();
   }
 }
 
-class MyappState extends State<Myapp> {
-  var questionIndex = 0;
+class _MyappState extends State<Myapp> {
+  var _questionIndex = 0;
 
   void answerQuestion() {
     setState(() {
-      questionIndex = questionIndex + 1;
+      if (_questionIndex == 1) {
+        _questionIndex = _questionIndex - 1;
+      } else {
+        _questionIndex = _questionIndex = 1;
+      }
     });
 
-    log(questionIndex.toString());
+    log(_questionIndex.toString());
   }
 
   @override
@@ -50,7 +54,7 @@ class MyappState extends State<Myapp> {
         body: Column(
           // ignore: prefer_const_literals_to_create_immutables
           children: [
-            Text(questions[questionIndex]),
+            Text(questions[_questionIndex]),
             // ignore: prefer_const_constructors
             RaisedButton(
               onPressed:
