@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:quizapp/Question.dart';
 
 void main() {
   runApp(
@@ -54,7 +55,9 @@ class _MyappState extends State<Myapp> {
         body: Column(
           // ignore: prefer_const_literals_to_create_immutables
           children: [
-            Text(questions[_questionIndex]),
+            Question(
+              question: questions[_questionIndex],
+            ),
             // ignore: prefer_const_constructors
             RaisedButton(
               onPressed:
