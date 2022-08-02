@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:quizapp/Question.dart';
+import 'package:quizapp/answer.dart';
 
 void main() {
   runApp(
@@ -27,10 +28,10 @@ class _MyappState extends State<Myapp> {
 
   void answerQuestion() {
     setState(() {
-      if (_questionIndex == 1) {
-        _questionIndex = _questionIndex - 1;
+      if (_questionIndex == 2) {
+        _questionIndex = _questionIndex - 2;
       } else {
-        _questionIndex = _questionIndex = 1;
+        _questionIndex = _questionIndex + 1;
       }
     });
 
@@ -42,9 +43,18 @@ class _MyappState extends State<Myapp> {
     // build is a built in function that flutter will call . it will return a widget
 
     var questions = [
-      "who is your fav actor?",
-      "who is your fav singer?",
-      "what is your pet?"
+      {
+        "QuestionText": "who is your fav actor?",
+        "Answers": ["MOHANLAL", "MAMMOOTTY", "RAJANI"]
+      },
+      {
+        "QuestionText": "who is your fav singer?",
+        "Answers": ["ANIRUTH", "VIJAY", "SIMBU"]
+      },
+      {
+        "QuestionText": "what is your pet?",
+        "Answers": ["DOG", "CAT", "BIRD"]
+      },
     ];
 
     return MaterialApp(
@@ -56,30 +66,14 @@ class _MyappState extends State<Myapp> {
           // ignore: prefer_const_literals_to_create_immutables
           children: [
             Question(
-              question: questions[_questionIndex],
+              question: questions[_questionIndex]['QuestionText'].toString(),
             ),
-            // ignore: prefer_const_constructors
-            RaisedButton(
-              onPressed:
-                  answerQuestion, // pointing at the function not executing it
-              child: const Text(
-                "Answer 1",
-              ),
-            ),
-            ElevatedButton(
-              onPressed:
-                  answerQuestion, // pointing at the function not executing it
-              child: Text(
-                "Answer 2",
-              ),
-            ),
-            ElevatedButton(
-              onPressed:
-                  answerQuestion, // pointing at the function not executing it
-              child: Text(
-                "Answer 2",
-              ),
-            ),
+            ...(questions[_questionIndex]['Answers'] as List).map((answer) {
+              return Answer(
+                onpressed: answerQuestion,
+                buttonText: answer,
+              );
+            }).toList(),
           ],
         ),
       ),
