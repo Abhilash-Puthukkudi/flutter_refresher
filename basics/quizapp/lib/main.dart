@@ -75,12 +75,23 @@ class _MyappState extends State<Myapp> {
                     }).toList(),
                   ],
                 )
-              : Center(
-                  child: Question(
-                  question: "Wow you did it",
-                ))),
+              : const congowidget()),
       //home is core widget that flutter bring into the screen
     );
+  }
+}
+
+class congowidget extends StatelessWidget {
+  const congowidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Question(
+        question: "Wow you did it",
+      ));
   }
 }
 
