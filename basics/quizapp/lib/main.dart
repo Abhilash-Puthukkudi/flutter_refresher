@@ -28,11 +28,7 @@ class _MyappState extends State<Myapp> {
 
   void answerQuestion() {
     setState(() {
-      if (_questionIndex == 2) {
-        _questionIndex = _questionIndex - 2;
-      } else {
-        _questionIndex = _questionIndex + 1;
-      }
+      _questionIndex = _questionIndex + 1;
     });
 
     log(_questionIndex.toString());
@@ -59,24 +55,30 @@ class _MyappState extends State<Myapp> {
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text("basics app"),
-        ),
-        body: Column(
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            Question(
-              question: questions[_questionIndex]['QuestionText'].toString(),
-            ),
-            ...(questions[_questionIndex]['Answers'] as List).map((answer) {
-              return Answer(
-                onpressed: answerQuestion,
-                buttonText: answer,
-              );
-            }).toList(),
-          ],
-        ),
-      ),
+          appBar: AppBar(
+            title: const Text("basics app"),
+          ),
+          body: _questionIndex <= 2
+              ? Column(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    Question(
+                      question:
+                          questions[_questionIndex]['QuestionText'].toString(),
+                    ),
+                    ...(questions[_questionIndex]['Answers'] as List)
+                        .map((answer) {
+                      return Answer(
+                        onpressed: answerQuestion,
+                        buttonText: answer,
+                      );
+                    }).toList(),
+                  ],
+                )
+              : Center(
+                  child: Question(
+                  question: "Wow you did it",
+                ))),
       //home is core widget that flutter bring into the screen
     );
   }
