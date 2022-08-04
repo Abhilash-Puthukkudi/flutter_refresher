@@ -5,6 +5,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:quizapp/Question.dart';
 import 'package:quizapp/answer.dart';
+import 'package:quizapp/answsers.dart';
+
+import 'congowidget.dart';
 
 void main() {
   runApp(
@@ -59,41 +62,17 @@ class _MyappState extends State<Myapp> {
             title: const Text("basics app"),
           ),
           body: _questionIndex <= 2
-              ? Column(
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    Question(
-                      question:
-                          questions[_questionIndex]['QuestionText'].toString(),
-                    ),
-                    ...(questions[_questionIndex]['Answers'] as List)
-                        .map((answer) {
-                      return Answer(
-                        onpressed: answerQuestion,
-                        buttonText: answer,
-                      );
-                    }).toList(),
-                  ],
-                )
+              ? Quiz(
+                  questionIndex: _questionIndex,
+                  answerQuestion: answerQuestion,
+                  questions: questions)
               : const congowidget()),
       //home is core widget that flutter bring into the screen
     );
   }
 }
 
-class congowidget extends StatelessWidget {
-  const congowidget({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Question(
-        question: "Wow you did it",
-      ));
-  }
-}
 
 // points to remember
 // main function automatically executes when app launches
@@ -101,3 +80,6 @@ class congowidget extends StatelessWidget {
 // @override is called decorator 
 // it simply calls the build() method inside the class which is extended by Stateless/Statefull widget class
 // that will return a material app widget  
+// ... spred operator
+// {} named arguments
+// 
