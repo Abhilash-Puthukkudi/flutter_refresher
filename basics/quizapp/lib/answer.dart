@@ -9,14 +9,17 @@ class Answer extends StatelessWidget {
   build(BuildContext context) {
     // ignore: sized_box_for_whitespace
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.all(10),
       width: double.infinity,
-      child: ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.pinkAccent)),
+      height: 50,
+      child: OutlinedButton(
+        // style: ButtonStyle(
+        //     backgroundColor: MaterialStateProperty.all(Colors.green),
+        //     foregroundColor: MaterialStateProperty.all(Colors.black)),
+        style: ElevatedButton.styleFrom(
+            onPrimary: Colors.green, side: BorderSide(color: Colors.green)),
         onPressed: onpressed, // pointing at the function not executing it
         child: Text(
-          style: TextStyle(color: Colors.yellow),
           buttonText,
         ),
       ),

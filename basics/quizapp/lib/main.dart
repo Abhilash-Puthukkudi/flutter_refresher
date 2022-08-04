@@ -33,8 +33,12 @@ class _MyappState extends State<Myapp> {
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
+  }
 
-    log(_questionIndex.toString());
+  void questionReset() {
+    setState(() {
+      _questionIndex = 0;
+    });
   }
 
   @override
@@ -66,7 +70,9 @@ class _MyappState extends State<Myapp> {
                   questionIndex: _questionIndex,
                   answerQuestion: answerQuestion,
                   questions: questions)
-              : const congowidget()),
+              : congowidget(
+                  resetButon: questionReset,
+                )),
       //home is core widget that flutter bring into the screen
     );
   }
