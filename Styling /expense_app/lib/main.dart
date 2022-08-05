@@ -77,10 +77,11 @@ class Homepage extends StatelessWidget {
             ),
             Container(
               height: 400,
-              child: ListView(
-                children: transactions.map((Tx) {
-                  return BottomCard(Tr: Tx);
-                }).toList(),
+              child: ListView.builder(
+                itemBuilder: ((context, index) {
+                  return BottomCard(Tr: transactions[index]);
+                }),
+                itemCount: transactions.length,
               ),
             )
           ],
