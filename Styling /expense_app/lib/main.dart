@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:expense_app/models/transactions.dart';
 import 'package:expense_app/widgets/BottomCard.dart';
 import 'package:expense_app/widgets/TopCard.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(ExpenseAPP());
@@ -20,68 +23,68 @@ class ExpenseAPP extends StatelessWidget {
 class Homepage extends StatelessWidget {
   final List<Transactions> transactions = [
     Transactions(
-        id: "1", title: "Wedding", amount: 2000.0, date: DateTime.now()),
-    Transactions(id: "2", title: "Show", amount: 1500.0, date: DateTime.now()),
+        id: "1", title: "Malayankunj", amount: 200.0, date: DateTime.now()),
+    Transactions(id: "2", title: "KGF", amount: 250.0, date: DateTime.now()),
+    Transactions(
+        id: "3", title: "Mahaveeryar", amount: 256.0, date: DateTime.now()),
+    Transactions(id: "4", title: "Pappan", amount: 150.0, date: DateTime.now()),
+    Transactions(id: "4", title: "Pappan", amount: 150.0, date: DateTime.now()),
+    Transactions(id: "4", title: "Pappan", amount: 150.0, date: DateTime.now()),
+    Transactions(id: "4", title: "Pappan", amount: 150.0, date: DateTime.now()),
+    Transactions(id: "4", title: "Pappan", amount: 150.0, date: DateTime.now()),
   ];
-
+  String? TitleInput;
+  double? amountInput;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(title: Text("ExpenseAPP"), centerTitle: true),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TopCard(),
-          Column(
-            children: transactions.map((Tx) {
-              return Card(
-                  margin: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.greenAccent,
-                            width: 2,
-                          ),
-                        ),
-                        margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        child: Text(
-                          Tx.amount.toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.greenAccent),
-                        ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            Tx.title.toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Colors.black),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(Tx.date.toString(),
-                              style: TextStyle(color: Colors.grey))
-                        ],
-                      )
-                    ],
-                  ));
-            }).toList(),
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TopCard(),
+            Card(
+              margin: EdgeInsets.all(8),
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(labelText: "Title"),
+                      onChanged: (value) => TitleInput = value,
+                    ),
+                    TextField(
+                      decoration: InputDecoration(labelText: "Amount"),
+                      onChanged: (value) => amountInput = double.parse(value),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          log("Amount : " + TitleInput.toString());
+                          log("Title  : " + amountInput.toString());
+                        },
+                        child: Text("Add transaction"))
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              height: 400,
+              child: ListView(
+                children: transactions.map((Tx) {
+                  return BottomCard(Tr: Tx);
+                }).toList(),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
