@@ -30,7 +30,7 @@ class BottomCard extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                    color: Colors.greenAccent),
+                    color: Theme.of(context).primaryColorDark),
               ),
             ),
             Column(
@@ -39,10 +39,7 @@ class BottomCard extends StatelessWidget {
               children: [
                 Text(
                   Tr.title.toString(),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.black),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(
                   height: 5,
