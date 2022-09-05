@@ -10,45 +10,68 @@ class BottomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        elevation: 10,
-        margin: EdgeInsets.all(4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.greenAccent,
-                  width: 2,
-                ),
-              ),
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Text(
-                '₹' + Tr.amount.toString(),
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Theme.of(context).primaryColorDark),
-              ),
+    return ListTile(
+      leading: CircleAvatar(
+        radius: 30,
+        child: FittedBox(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              '₹' + Tr.amount.toString(),
+              style: Theme.of(context).textTheme.bodyText1,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  Tr.title.toString(),
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(DateFormat("dd MMM yyyy").format(Tr.date as DateTime),
-                    style: TextStyle(color: Colors.grey))
-              ],
-            )
-          ],
-        ));
+          ),
+        ),
+      ),
+      title: Text(
+        Tr.title.toString(),
+        style: Theme.of(context).textTheme.headline2,
+      ),
+      subtitle: Text(DateFormat("dd MMM yyyy").format(Tr.date as DateTime)),
+    );
   }
 }
+
+
+// Card(
+//         elevation: 10,
+//         margin: EdgeInsets.all(4),
+//         child: Row(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: [
+//             Container(
+//               padding: EdgeInsets.all(15),
+//               decoration: BoxDecoration(
+//                 border: Border.all(
+//                   color: Colors.greenAccent,
+//                   width: 2,
+//                 ),
+//               ),
+//               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+//               child: FittedBox(
+//                 child: Text(
+//                   '₹' + Tr.amount.toString(),
+//                   style: TextStyle(
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 20,
+//                       color: Theme.of(context).primaryColorDark),
+//                 ),
+//               ),
+//             ),
+//             Column(
+//               mainAxisAlignment: MainAxisAlignment.spaceAround,
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(
+//                   Tr.title.toString(),
+//                   style: Theme.of(context).textTheme.titleLarge,
+//                 ),
+//                 SizedBox(
+//                   height: 5,
+//                 ),
+//                 Text(DateFormat("dd MMM yyyy").format(Tr.date as DateTime),
+//                     style: TextStyle(color: Colors.grey))
+//               ],
+//             )
+//           ],
+//         ));

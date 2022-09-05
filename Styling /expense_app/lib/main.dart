@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:expense_app/models/transactions.dart';
 import 'package:expense_app/widgets/BottomCard.dart';
 import 'package:expense_app/widgets/TopCard.dart';
+import 'package:expense_app/widgets/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,17 +14,26 @@ void main() {
 
 @override
 class ExpenseAPP extends StatelessWidget {
+  const ExpenseAPP({Key? key}) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
           textTheme: ThemeData.light().textTheme.copyWith(
-              titleLarge: TextStyle(fontFamily: "Quicksand", fontSize: 18)),
+              titleLarge:
+                  const TextStyle(fontFamily: "Quicksand", fontSize: 18)),
           appBarTheme: AppBarTheme(
-              textTheme: ThemeData.light()
+              toolbarTextStyle: ThemeData.light()
                   .textTheme
-                  .copyWith(headline1: TextStyle(fontFamily: 'OpenSans'))),
+                  .copyWith(headline1: const TextStyle(fontFamily: 'OpenSans'))
+                  .bodyText2,
+              titleTextStyle: ThemeData.light()
+                  .textTheme
+                  .copyWith(headline1: const TextStyle(fontFamily: 'OpenSans'))
+                  .headline6),
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepOrange)
-              .copyWith(secondary: Colors.purple),
+              .copyWith(secondary: Colors.deepOrangeAccent),
         ),
         debugShowCheckedModeBanner: false,
         title: 'expense app',
@@ -31,23 +42,32 @@ class ExpenseAPP extends StatelessWidget {
 }
 
 class Homepage extends StatefulWidget {
+  const Homepage({Key? key}) : super(key: key);
+
   @override
   State<Homepage> createState() => _HomepageState();
 }
 
 class _HomepageState extends State<Homepage> {
   final List<Transactions> transactions = [
-    Transactions(
-        id: "1", title: "Malayankunj", amount: 200.0, date: DateTime.now()),
-    Transactions(id: "2", title: "KGF", amount: 250.0, date: DateTime.now()),
-    Transactions(
-        id: "3", title: "Mahaveeryar", amount: 256.0, date: DateTime.now()),
-    Transactions(id: "4", title: "Pappan", amount: 150.0, date: DateTime.now()),
+    // Transactions(
+    //     id: "1", title: "Malayankunj", amount: 200.0, date: DateTime.now()),
+    // Transactions(id: "2", title: "KGF", amount: 250.0, date: DateTime.now()),
+    // Transactions(
+    //     id: "3", title: "Mahaveeryar", amount: 256.0, date: DateTime.now()),
+    // Transactions(id: "4", title: "Pappan", amount: 150.0, date: DateTime.now()),
   ];
 
+  // ignore: non_constant_identifier_names
   String? TitleInput;
+  DateTime? SelectedDate;
 
   double? amountInput;
+  List<Transactions> get _recentTransactions {
+    return transactions.where((tx) {
+      return tx.date!.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
 
   void addToTransactions(String title, double amount) {
     Transactions transaction = Transactions(
@@ -58,6 +78,24 @@ class _HomepageState extends State<Homepage> {
 
     setState(() {
       transactions.add(transaction);
+    });
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2019),
+            lastDate: DateTime.now())
+        .then((date) {
+      if (date == null) {
+        return;
+      }
+
+      setState(() {
+        SelectedDate = date;
+        log(SelectedDate.toString());
+      });
     });
   }
 
@@ -78,37 +116,7 @@ class _HomepageState extends State<Homepage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TopCard(),
-            Card(
-              margin: EdgeInsets.all(8),
-              child: Container(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(labelText: "Title"),
-                      onChanged: (value) => TitleInput = value,
-                    ),
-                    TextField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(labelText: "Amount"),
-                      onChanged: (value) => amountInput = double.parse(value),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          addToTransactions(
-                              TitleInput!.toString(), amountInput!.toDouble());
-                        },
-                        child: Text("Add transaction"))
-                  ],
-                ),
-              ),
-            ),
+            Chart(recentTransactions: _recentTransactions),
             Container(
               height: 324,
               child: ListView.builder(
@@ -139,38 +147,57 @@ class _HomepageState extends State<Homepage> {
             behavior: HitTestBehavior.opaque,
             child: Card(
               shadowColor: Colors.black,
-              color: Colors.grey,
-              margin: EdgeInsets.all(8),
+              color: Colors.white,
+              margin: EdgeInsets.all(2),
               child: Container(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(labelText: "Title"),
-                      onChanged: (value) => TitleInput = value,
-                    ),
-                    TextField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(labelText: "Amount"),
-                      onChanged: (value) => amountInput = double.parse(value),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          addToTransactions(
-                              TitleInput!.toString(), amountInput!.toDouble());
+                padding: EdgeInsets.all(10),
+                child: Container(
+                  height: 210,
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      TextField(
+                        decoration: InputDecoration(labelText: "Title"),
+                        onChanged: (value) => TitleInput = value,
+                      ),
+                      TextField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(labelText: "Amount"),
+                        onChanged: (value) => amountInput = double.parse(value),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Text(SelectedDate == null
+                              ? 'No Date Choosen'
+                              : DateFormat("dd MMM yyyy")
+                                  .format(SelectedDate as DateTime)),
+                          TextButton(
+                              onPressed: () {
+                                _presentDatePicker();
+                              },
+                              child: Text(
+                                "Select Date",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))
+                        ],
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            addToTransactions(TitleInput!.toString(),
+                                amountInput!.toDouble());
 
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          "Add transaction",
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ))
-                  ],
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Add transaction",
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ))
+                    ],
+                  ),
                 ),
               ),
             ),
