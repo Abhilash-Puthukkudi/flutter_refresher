@@ -12,6 +12,15 @@ void main() {
   runApp(ExpenseAPP());
 }
 
+final appbar = AppBar(
+  title: Text(
+    "ExpenseAPP",
+    style: TextStyle(fontFamily: "quicksand"),
+  ),
+  centerTitle: true,
+  actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
+);
+
 @override
 class ExpenseAPP extends StatelessWidget {
   const ExpenseAPP({Key? key}) : super(key: key);
@@ -103,14 +112,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "ExpenseAPP",
-          style: TextStyle(fontFamily: "quicksand"),
-        ),
-        centerTitle: true,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
-      ),
+      appBar: appbar,
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -118,7 +120,8 @@ class _HomepageState extends State<Homepage> {
           children: [
             Chart(recentTransactions: _recentTransactions),
             Container(
-              height: 324,
+              height: MediaQuery.of(context).size.height * 0.
+              6,
               child: ListView.builder(
                 itemBuilder: ((context, index) {
                   return BottomCard(Tr: transactions[index]);

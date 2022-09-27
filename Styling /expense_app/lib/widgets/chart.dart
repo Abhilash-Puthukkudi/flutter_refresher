@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:expense_app/main.dart';
 import 'package:expense_app/models/transactions.dart';
 import 'package:expense_app/widgets/ChartBar.dart';
 import 'package:flutter/material.dart';
@@ -43,26 +44,31 @@ class _ChartState extends State<Chart> {
   @override
   Widget build(BuildContext context) {
     log(widget.groupedtransactionValues.toString());
-    return Card(
-      elevation: 6,
-      margin: const EdgeInsets.all(20),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: widget.groupedtransactionValues.map((data) {
-            return Flexible(
-              fit: FlexFit.tight,
-              flex: 2,
-              child: ChartBar(
-                  data["day"].toString(),
-                  double.parse(data["amount"].toString()),
-                  widget.maxspending == 0.0
-                      ? 0.0
-                      : (double.parse(data["amount"].toString()) /
-                          widget.maxspending.toDouble())),
-            );
-          }).toList(),
+    return Container(
+      height:
+          (MediaQuery.of(context).size.height - appbar.preferredSize.height) *
+              0.54,
+      child: Card(
+        elevation: 6,
+        margin: const EdgeInsets.all(20),
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: widget.groupedtransactionValues.map((data) {
+              return Flexible(
+                fit: FlexFit.tight,
+                flex: 2,
+                child: ChartBar(
+                    data["day"].toString(),
+                    double.parse(data["amount"].toString()),
+                    widget.maxspending == 0.0
+                        ? 0.0
+                        : (double.parse(data["amount"].toString()) /
+                            widget.maxspending.toDouble())),
+              );
+            }).toList(),
+          ),
         ),
       ),
     );
