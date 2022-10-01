@@ -6,9 +6,12 @@ import 'package:expense_app/widgets/BottomCard.dart';
 import 'package:expense_app/widgets/TopCard.dart';
 import 'package:expense_app/widgets/chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations( [DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]);
   runApp(ExpenseAPP());
 }
 
@@ -118,10 +121,16 @@ class _HomepageState extends State<Homepage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Row(
+              children: [
+                Text("Show chart : "),
+                Switch(value: true, onChanged: null)
+              ],
+            )
+            ,
             Chart(recentTransactions: _recentTransactions),
             Container(
-              height: MediaQuery.of(context).size.height * 0.
-              6,
+              height: MediaQuery.of(context).size.height * 0.6,
               child: ListView.builder(
                 itemBuilder: ((context, index) {
                   return BottomCard(Tr: transactions[index]);

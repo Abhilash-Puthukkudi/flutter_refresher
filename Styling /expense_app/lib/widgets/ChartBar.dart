@@ -10,7 +10,9 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return
+    LayoutBuilder(builder: (context, constraints) {
+      return Column(
       children: [
         Container(
             height: 20,
@@ -52,5 +54,7 @@ class ChartBar extends StatelessWidget {
         Text(label.toString()),
       ],
     );
+    }) ; 
+    
   }
 }
