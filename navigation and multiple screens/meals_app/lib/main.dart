@@ -12,8 +12,11 @@ class Myapp extends StatelessWidget{
     return MaterialApp(
       title: "Meals App",
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink).copyWith(secondary: Colors.amber),
+       canvasColor: Color.fromARGB(255, 242, 242, 237),
+       fontFamily: "Raleway",
+       
+
       ),
       home: homescreen() ,
       
@@ -27,7 +30,8 @@ class homescreen extends StatelessWidget{
   Widget build(BuildContext context) {
 return Scaffold
 
-(body: CategoriesScreen());
+(appBar: AppBar(title: Text("Meals APP"),),
+  body: CategoriesScreen());
 
   }
 }

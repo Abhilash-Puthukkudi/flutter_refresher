@@ -12,12 +12,13 @@ class CategorieItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         return Container(
-          margin: EdgeInsets.all(10),
+          // margin: EdgeInsets.all(10),
           padding: const EdgeInsets.all(15),
+          // ignore: sort_child_properties_last
           child: Center(
                         child: Text(
                                     title,
-                                    style: TextStyle(fontSize: 18,
+                                    style: const TextStyle(fontSize: 18,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w200
                                     ),
