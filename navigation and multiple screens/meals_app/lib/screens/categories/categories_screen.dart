@@ -3,10 +3,12 @@ import 'package:meals_app/datas/dummy_data.dart';
 import 'package:meals_app/screens/categories/widgets/categorie_item.dart';
 
 class CategoriesScreen extends StatelessWidget{
+  static const routeId ="categorysScreen";
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+      appBar: AppBar(title: Text("Meals App"),),
       
       body: SafeArea(
         child: GridView(
